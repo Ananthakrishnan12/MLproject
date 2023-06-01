@@ -46,7 +46,40 @@ class ModelTrainer:
                 "KnearestRegressor":KNeighborsRegressor(),
             }
             
-            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
+            params={
+                "DecisionTree":{
+                    "criterion":["squared_error","absolute_error"]
+                },
+                
+                "Random Forest":{
+                    "n_estimators":[5,10]
+                },
+                
+                "Gradient Boosting":{
+                    "learning_rate":[0.1,0.001],
+                    "n_estimators":[5,10]
+                },
+                
+                "Linear regression":{},
+                
+                "XGBregressor":{
+                    "learning_rate":[0.1,0.001],
+                    "n_estimators":[5,10],
+                },
+                
+                "CatBoosting regressor":{
+                    "learning_rate":[0.1,0.001],
+                    "iterations":[10,20]
+                },
+                
+                "Adaboost Regressor":{
+                    "learning_rate":[0.1,0.001],
+                    "n_estimators":[5,10]
+                }
+            }
+            
+            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
+                                            models=models,param=params)
             
             ## To get the best model score for the dict:
             best_model_score=max(sorted(model_report.values()))
